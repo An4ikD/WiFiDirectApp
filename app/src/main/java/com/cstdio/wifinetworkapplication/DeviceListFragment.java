@@ -38,7 +38,9 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.d("DLF", "created");
         this.setListAdapter(new WiFiPeerListAdapter(getActivity(), R.layout.row_devices, peers));
+        Log.d("DLF", "adapter is set");
     }
 
     @Override
@@ -140,6 +142,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
+
         progressDialog = ProgressDialog.show(getActivity(), "Press back to cancel", "finding peers", true,
                 true, new DialogInterface.OnCancelListener() {
                     @Override
