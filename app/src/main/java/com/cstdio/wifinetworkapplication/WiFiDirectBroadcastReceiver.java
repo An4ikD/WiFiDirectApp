@@ -17,6 +17,7 @@ import java.text.BreakIterator;
  */
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
+    public static String TAG = "WiFiDirectBroadcastReceiver";
     private WifiP2pManager manager;
     private Channel channel;
     private MainActivity activity;
