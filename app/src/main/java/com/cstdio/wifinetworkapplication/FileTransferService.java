@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.net.Socket;
  * Created by anuar on 11/18/16.
  */
 public class FileTransferService extends IntentService {
+    public static String TAG = "FileTransferService";
     private static final int SOCKET_TIMEOUT = 5000;
     public static final String ACTION_SEND_FILE = "com.cstdio.wifinetworkapplication.SEND_FILE";
     public static final String EXTRAS_FILE_PATH = "file_url";
@@ -40,7 +42,7 @@ public class FileTransferService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         Context context = getApplicationContext();
-        Log.d("FTS", intent.getAction());
+        Log.d(TAG, intent.getAction());
         if (intent.getAction().equals(ACTION_SEND_FILE)) {
             String fileUri = intent.getExtras().getString(EXTRAS_FILE_PATH);
             String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
@@ -48,23 +50,23 @@ public class FileTransferService extends IntentService {
             int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
 
             try {
-                Log.d(MainActivity.TAG, "Opening client socket - ");
+                Log.d(TAG, "Opening client socket - ");
                 socket.bind(null);
                 socket.connect((new InetSocketAddress(host, port)), SOCKET_TIMEOUT);
 
-                Log.d(MainActivity.TAG, "Client socket - " + socket.isConnected());
+                Log.d(TAG, "Client socket - " + socket.isConnected());
                 OutputStream stream = socket.getOutputStream();
                 ContentResolver cr = context.getContentResolver();
                 InputStream is = null;
                 try {
                     is = cr.openInputStream(Uri.parse(fileUri));
                 } catch (FileNotFoundException e) {
-                    Log.d(MainActivity.TAG, e.toString());
+                    Log.d(TAG, e.toString());
                 }
                 DeviceDetailFragment.copyFile(is, stream);
-                Log.d(MainActivity.TAG, "Client: Data written");
+                Log.d(TAG, "Client: Data written");
             } catch (IOException e) {
-                Log.e(MainActivity.TAG, e.getMessage());
+                Log.e(TAG, e.getMessage());
             } finally {
                 if (socket != null) {
                     if (socket.isConnected()) {

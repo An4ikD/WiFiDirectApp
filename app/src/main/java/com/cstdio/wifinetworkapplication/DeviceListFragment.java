@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class DeviceListFragment extends ListFragment implements PeerListListener {
 
+    public static String TAG = "DeviceListFragment";
     private List<WifiP2pDevice> peers = new ArrayList<>();
     ProgressDialog progressDialog = null;
     View mContentView = null;
@@ -38,9 +39,9 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("DLF", "created");
+        Log.d(TAG, "created");
         this.setListAdapter(new WiFiPeerListAdapter(getActivity(), R.layout.row_devices, peers));
-        Log.d("DLF", "adapter is set");
+        Log.d(TAG, "adapter is set");
     }
 
     @Override
@@ -54,7 +55,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
     }
 
     private static String getDeviceStatus(int deviceStatus) {
-        Log.d(MainActivity.TAG, "Peer status :" + deviceStatus);
+        Log.d(TAG, "Peer status: " + deviceStatus);
         switch (deviceStatus) {
             case WifiP2pDevice.AVAILABLE:
                 return "Available";
@@ -128,7 +129,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
         peers.addAll(peerList.getDeviceList());
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
         if (peers.size() == 0) {
-            Log.d(MainActivity.TAG, "No devices found");
+            Log.d(TAG, "No devices found");
             return;
         }
     }
@@ -147,7 +148,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
                 true, new DialogInterface.OnCancelListener() {
                     @Override
                     public void onCancel(DialogInterface dialog) {
-                        Log.e(MainActivity.TAG, "Discovery cancelled");
+                        Log.e(TAG, "Discovery cancelled");
                     }
                 });
     }

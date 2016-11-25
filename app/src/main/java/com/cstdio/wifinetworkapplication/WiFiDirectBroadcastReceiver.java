@@ -17,6 +17,7 @@ import java.text.BreakIterator;
  */
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
+    public static String TAG = "BroadcastReceiver";
     private WifiP2pManager manager;
     private Channel channel;
     private MainActivity activity;
@@ -43,14 +44,14 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                 activity.setIsWifiP2pEnabled(false);
                 activity.resetData();
             }
-            Log.d(MainActivity.TAG, "P2P state changed - " + state);
+            Log.d(TAG, "P2P state changed - " + state);
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // Call WifiP2pManager.requestPeers() to get a list of current peers
             if (manager != null) {
                 manager.requestPeers(channel, (PeerListListener) activity.getFragmentManager()
                                     .findFragmentById(R.id.frag_list));
             }
-            Log.d(MainActivity.TAG, "P2P peers changed");
+            Log.d(TAG, "P2P peers changed");
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
             // Respond to new connection or disconnections
             if (manager == null) {
