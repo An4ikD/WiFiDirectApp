@@ -101,6 +101,8 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
                 info.groupOwnerAddress.getHostAddress());
         serviceIntent.putExtra(FileTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
+        Log.d(TAG, "Starting FileTransferService");
+        Log.d(TAG, getActivity().toString());
         getActivity().startService(serviceIntent);
     }
 
@@ -187,6 +189,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                 Log.d(TAG, "Server: Socket opened");
                 Socket client = serverSocket.accept();
                 Log.d(TAG, "Server: connection done");
+
                 final File f = new File(Environment.getExternalStorageDirectory() + "/"
                         + context.getPackageName() + "/wifip2pshared-" + System.currentTimeMillis()
                         + ".jpg");
@@ -211,10 +214,10 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         protected void onPostExecute(String result) {
             if (result != null) {
                 statusText.setText("File copied - " + result);
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse("file://" + result), "image/*");
-                context.startActivity(intent);
+                intent.setDataAndType(Uri.parse("file://" + result), "image*//*");
+                context.startActivity(intent);*/
             }
         }
 
@@ -230,7 +233,6 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         try {
             while ((len = inputStream.read(buf)) != -1) {
                 out.write(buf, 0, len);
-
             }
             out.close();
             inputStream.close();
