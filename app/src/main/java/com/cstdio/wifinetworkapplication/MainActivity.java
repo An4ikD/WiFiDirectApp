@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements ChannelListener, 
         channel = manager.initialize(this, getMainLooper(), null);
 
         intentFilter = new IntentFilter();
+
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
